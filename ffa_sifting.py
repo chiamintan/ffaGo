@@ -130,7 +130,7 @@ class FFACandlist(sifting.Candlist):
         
         plt.axes(ax) # Set scatter plot's axes as current
         plt.xscale(xscale)
-        plt.xlabel(xlabel)
+        plt.xlabel(xlabel,fontsize='x-large')
         mindm = Num.min(dms)
         maxdm = Num.max(dms)
         dmrange = Num.ptp(dms)
@@ -141,7 +141,7 @@ class FFACandlist(sifting.Candlist):
 
         plt.ylim(1.0, maxdm+0.1*dmrange)
 
-        plt.ylabel(r"DM (pc cm$^{-3}$)") 
+        plt.ylabel(r"DM (pc cm$^{-3}$)",fontsize = 'x-large') 
         if not usefreqs:
             plt.gca().xaxis.set_ticks(Num.concatenate((Num.array([0.1,1,2,5]), Num.linspace(10,35,6))))
             #plt.gca().xaxis.set_ticks(Num.logspace(-2,0,40), minor=True)
