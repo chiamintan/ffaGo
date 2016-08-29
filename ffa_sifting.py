@@ -136,23 +136,21 @@ class FFACandlist(sifting.Candlist):
         dmrange = Num.ptp(dms)
 
         # Use log-scale y-axis if max DM > 2000
-        yscale = "log" if maxdm > 2000.0 else "linear"
+        yscale = "log" 
         plt.yscale(yscale)
 
-        if yscale is "log":
-            plt.ylim(1.0, maxdm+0.1*dmrange)
+        plt.ylim(1.0, maxdm+0.1*dmrange)
         else:
             plt.ylim(mindm-0.1*dmrange, maxdm+0.1*dmrange)
 
         plt.ylabel(r"DM (pc cm$^{-3}$)") 
         if not usefreqs:
             plt.gca().xaxis.set_ticks(Num.concatenate((\
-                                        Num.logspace(-4,0,4, endpoint=False), \
-                                        Num.linspace(1,15,8))))
-            plt.gca().xaxis.set_ticks(Num.logspace(-4,0,40), minor=True)
-            plt.gca().xaxis.set_ticklabels([r"10$^{-4}$", r"10$^{-3}$", \
-                        r"10$^{-2}$", r"10$^{-1}$", "1", "3", "5", "7", \
-                        "9", "11", "13", "15"])
+                                        Num.logspace(-2,1,4, endpoint=False), \
+                                        Num.linspace(10,35,6))))
+            #plt.gca().xaxis.set_ticks(Num.logspace(-2,0,40), minor=True)
+            plt.gca().xaxis.set_ticklabels([r"10$^{-2}$", r"10$^{-1}$", \
+                        r"10$^{0}$", r"10$^{1}$"])
             plt.xlim(max(short_period/5.0, min(xdata)/5.0), \
                         min(long_period+0.5, max(xdata)+0.5))
         else:
