@@ -94,7 +94,7 @@ class FFACandlist(sifting.Candlist):
         import matplotlib
         import matplotlib.pyplot as plt
 
-        fig = plt.figure(figsize=(10,8)) 
+        fig = plt.figure(figsize=(18,8)) 
         ax = plt.axes((0.08, 0.18, 0.87, 0.80)) 
         
         # Get all candidates and sort by sigma
@@ -140,17 +140,12 @@ class FFACandlist(sifting.Candlist):
         plt.yscale(yscale)
 
         plt.ylim(1.0, maxdm+0.1*dmrange)
-        else:
-            plt.ylim(mindm-0.1*dmrange, maxdm+0.1*dmrange)
 
         plt.ylabel(r"DM (pc cm$^{-3}$)") 
         if not usefreqs:
-            plt.gca().xaxis.set_ticks(Num.concatenate((\
-                                        Num.logspace(-2,1,4, endpoint=False), \
-                                        Num.linspace(10,35,6))))
+            plt.gca().xaxis.set_ticks(Num.concatenate((Num.array([0.1,1,2,5]), Num.linspace(10,35,6))))
             #plt.gca().xaxis.set_ticks(Num.logspace(-2,0,40), minor=True)
-            plt.gca().xaxis.set_ticklabels([r"10$^{-2}$", r"10$^{-1}$", \
-                        r"10$^{0}$", r"10$^{1}$"])
+            plt.gca().xaxis.set_ticklabels(["0.1","1","2","5","10","15","20","25","30","35"])
             plt.xlim(max(short_period/5.0, min(xdata)/5.0), \
                         min(long_period+0.5, max(xdata)+0.5))
         else:
