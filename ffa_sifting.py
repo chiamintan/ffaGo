@@ -110,7 +110,7 @@ class FFACandlist(sifting.Candlist):
         else:
             xdata = Num.array([c.p for c in allcands])[isort]
             xlabel = "Period (s)"
-            xscale = "loglin"
+            xscale = "log"
 
         dms = Num.array([c.DM for c in allcands])[isort]
         numharms = Num.array([c.numharm for c in allcands])[isort]
@@ -143,9 +143,9 @@ class FFACandlist(sifting.Candlist):
 
         plt.ylabel(r"DM (pc cm$^{-3}$)",fontsize = 'x-large') 
         if not usefreqs:
-            plt.gca().xaxis.set_ticks(Num.concatenate((Num.array([0.1,1,2,5]), Num.linspace(10,35,6))))
+            #plt.gca().xaxis.set_ticks(Num.concatenate((Num.array([0.1,1,2,5]), Num.linspace(10,35,6))))
             #plt.gca().xaxis.set_ticks(Num.logspace(-2,0,40), minor=True)
-            plt.gca().xaxis.set_ticklabels(["0.1","1","2","5","10","15","20","25","30","35"])
+            #plt.gca().xaxis.set_ticklabels(["0.1","1","2","5","10","15","20","25","30","35"])
             plt.xlim(max(short_period/5.0, min(xdata)/5.0), \
                         min(long_period+0.5, max(xdata)+0.5))
         else:
