@@ -323,7 +323,7 @@ def main():
         plt.subplot(311)
         plt.suptitle("Periodograms"+'\n'+name)
         # sampling interval : initial
-        plt.plot(Ps1,list_SNS[0],color='k',linewidth=1.3,label='No Downsample')
+        plt.plot(Ps1,list_SNS[0],color='k',linewidth=1.3,label=r'$\Delta t \sim $ '+str(round(list_DTS[0][0],4))+'s')
         plt.ylabel(' S/N ' ,fontsize=20)
         plt.fill_between(Ps9, 5, 0,alpha = '0.2',color='grey')
         plt.xlim(xmin=0.1,xmax=30)
@@ -334,8 +334,8 @@ def main():
     
         plt.subplot(312)
         # sampling interval : 2X initial
-        plt.plot(Ps2,list_SNS[1],color='blue',linewidth=1.0,label='Downsample x2 (phase 1)')
-        plt.plot(Ps2,list_SNS[2],color='steelblue',linewidth=1.0,label='Downsample x2 (phase 2)')
+        plt.plot(Ps2,list_SNS[1],color='blue',linewidth=1.0,label=r'$\Delta t \sim $ '+str(round(list_DTS[1][0],4))+'s')
+        plt.plot(Ps2,list_SNS[2],color='steelblue',linewidth=1.0)
         plt.ylabel(' S/N ' ,fontsize=20)
         plt.fill_between(Ps9, 5, 0,alpha = '0.2',color='grey')
         plt.xlim(xmin=0.1,xmax=30)
@@ -346,10 +346,10 @@ def main():
     
         plt.subplot(313)
         # sampling interval : 9X initial
-        plt.plot(Ps9,list_SNS[10],color='r',linewidth=1.0,label='Downsample x9 (phase 1)')
-        plt.plot(Ps9,list_SNS[12],color='indianred',linewidth=1.0,label='Downsample x9 (phase 3)')
-        plt.plot(Ps9,list_SNS[15],color='tomato',linewidth=1.0,label='Downsample x9 (phase 6)')
-        plt.plot(Ps9,list_SNS[18],color='maroon',linewidth=1.0,label='Downsample x9 (phase 9)')
+        plt.plot(Ps9,list_SNS[10],color='r',linewidth=1.0,label=r'$\Delta t \sim $ '+str(round(list_DTS[10][0],4))+'s')
+        plt.plot(Ps9,list_SNS[12],color='indianred',linewidth=1.0)
+        plt.plot(Ps9,list_SNS[15],color='tomato',linewidth=1.0)
+        plt.plot(Ps9,list_SNS[18],color='maroon',linewidth=1.0)
         plt.ylabel(' S/N ' ,fontsize=20)
         plt.xlabel('Period (s)',fontsize=20)
         plt.fill_between(Ps9, 5, 0,alpha = '0.2',color='grey')
