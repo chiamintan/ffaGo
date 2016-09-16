@@ -314,21 +314,27 @@ def main():
     
     # Produces periodograms for few duty cycles
     if periodograms :
+        rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
+        plt.rc('font', family='serif')
         plt.figure(figsize=(20,10))
-    
+        xmax = p_ranges[-1][1]
+        xmin = p_ranges[0][0]
         ymin=0
         ymax = np.array([list_SNS[0].max(), list_SNS[1].max(), list_SNS[2].max(), list_SNS[10].max(),\
             list_SNS[12].max(), list_SNS[15].max(), list_SNS[18].max()]).max()
-        
+        if (round(xmax)-round(xmin))<12:
+            steps = 1 
+        else:
+            steps = int((round(xmax)-round(xmin))/12)
         plt.subplot(311)
         plt.suptitle("Periodograms"+'\n'+name)
         # sampling interval : initial
         plt.plot(Ps1,list_SNS[0],color='k',linewidth=1.3,label=r'$\Delta t \sim $ '+str(round(list_DTS[0][0],4))+'s')
         plt.ylabel(' S/N ' ,fontsize=20)
         plt.fill_between(Ps9, 5, 0,alpha = '0.2',color='grey')
-        plt.xlim(xmin=0.1,xmax=30)
+        plt.xlim(xmin=xmin,xmax=xmax)
         plt.ylim(ymin,ymax)
-        plt.xticks(fontsize=20)
+        plt.xticks(np.arange(round(xmin), round(xmax), steps),fontsize=20)
         plt.yticks(fontsize=20)
         plt.legend(frameon=False,prop={'size':10})
     
@@ -338,9 +344,9 @@ def main():
         plt.plot(Ps2,list_SNS[2],color='steelblue',linewidth=1.0)
         plt.ylabel(' S/N ' ,fontsize=20)
         plt.fill_between(Ps9, 5, 0,alpha = '0.2',color='grey')
-        plt.xlim(xmin=0.1,xmax=30)
+        plt.xlim(xmin=xmin,xmax=xmax)
         plt.ylim(ymin,ymax)
-        plt.xticks(fontsize=20)
+        plt.xticks(np.arange(round(xmin), round(xmax), steps),fontsize=20)
         plt.yticks(fontsize=20)
         plt.legend(frameon=False,prop={'size':10})
     
@@ -353,11 +359,12 @@ def main():
         plt.ylabel(' S/N ' ,fontsize=20)
         plt.xlabel('Period (s)',fontsize=20)
         plt.fill_between(Ps9, 5, 0,alpha = '0.2',color='grey')
-        plt.xlim(xmin=0.1,xmax=30)
+        plt.xlim(xmin=xmin,xmax=xmax)
         plt.ylim(ymin,ymax)
-        plt.xticks(fontsize=20)
+        plt.xticks(np.arange(round(xmin), round(xmax), steps),fontsize=20)
         plt.yticks(fontsize=20)
         plt.legend(frameon=False,prop={'size':10})
+        
 
         plt.savefig(name+'.png')
         print "Periodogram available : ", name+'.png'
