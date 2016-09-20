@@ -327,6 +327,7 @@ def main():
             steps = 1 
         else:
             steps = int((round(xmax)-round(xmin))/12)
+            
         plt.subplot(311)
 	# Initial sampling interval (shortest)
         plt.suptitle("Periodograms"+'\n'+name)
@@ -337,7 +338,7 @@ def main():
         plt.ylim(ymin,ymax)
         plt.xticks(np.arange(round(xmin), round(xmax), steps),fontsize=20)
         plt.yticks(fontsize=20)
-	    plt.minorticks_on()
+	plt.minorticks_on()
         plt.legend(frameon=False,prop={'size':14})
     
         plt.subplot(312)
@@ -350,7 +351,7 @@ def main():
         plt.ylim(ymin,ymax)
         plt.xticks(np.arange(round(xmin), round(xmax), steps),fontsize=20)
         plt.yticks(fontsize=20)
-	    plt.minorticks_on()
+	plt.minorticks_on()
         plt.legend(frameon=False,prop={'size':14})
     
         plt.subplot(313)
@@ -366,7 +367,7 @@ def main():
         plt.ylim(ymin,ymax)
         plt.xticks(np.arange(round(xmin), round(xmax), steps),fontsize=20)
         plt.yticks(fontsize=20)
-	    plt.minorticks_on()
+	plt.minorticks_on()
         plt.legend(frameon=False,prop={'size':14})
 
         plt.savefig(name+'.png')
