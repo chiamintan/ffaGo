@@ -6,6 +6,7 @@ import sys
 import os
 import ast
 import re
+from matplotlib import rc
 import matplotlib.pyplot as plt
 import scipy.signal
 import glob
