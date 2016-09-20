@@ -314,7 +314,6 @@ def main():
     
     # Produces periodograms for few duty cycles
     if periodograms :
-	minorLocator = MultipleLocator(10)
         rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
         plt.rc('font', family='serif')
         plt.figure(figsize=(20,10))
