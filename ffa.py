@@ -293,7 +293,6 @@ def main():
     ft.cands_to_file(cands,name,'_precands.ffa')
 
     # Check if candidates were selected
-    print SN_tresh
     if len(cands.periods)==0:
         print "No cands with S/N > ",SN_tresh," were detected"
         sys.exit()
