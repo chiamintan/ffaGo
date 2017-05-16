@@ -15,7 +15,8 @@ import ffa_stages as fs
 import ffa_sifting 
 
 """
-Run this script once you have applied the FFA on all de-dispersed time series.
+Run this script once you have ran the FFA on MULTIPLE DE-DISPERSED time series.
+This script is use in pulsar blind search, with multiple trial DMs.
 The candidate file inputed should include candidates from multiple DMs (if it applies)
 
 You need to give it a  '_rfifind.inf' file you want to write at the end of the final candidate list
