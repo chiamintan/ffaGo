@@ -400,10 +400,10 @@ def main():
         plt.yticks(fontsize=20)
 	plt.minorticks_on()
         plt.legend(frameon=False,prop={'size':14})
+	
+        plt.savefig(name+'.png')
 	if not noxwin:
 		plt.show()
-
-        plt.savefig(name+'.png')
         print "Periodogram available : ", name+'.png'
 
 
