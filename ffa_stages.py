@@ -46,7 +46,7 @@ def ffa_code_stage1(data ,dt , T , sigma_total,p_min, p_max, count_lim, name):
 		xwrap = FFA.XWrap2(data,p0, fill_value=fill_value, pow2=True)
 		folds = FFA.FFA(xwrap)
 		M = folds.shape[0]
-		SN = f.simple_SNR(folds, np.std(data),added_profs)  
+		SN = f.simple_SNR(folds, sigma_total ,added_profs)  
 		P = p0 + (np.arange(M, dtype=np.float) / (M-1))
 		Psec=P*dt
 		SNs1.append(SN)
@@ -81,6 +81,7 @@ def ffa_code_stage2(data ,dt , T , sigma_total,p_min, p_max, count_lim, name):
 	P0_start, P0_end = np.floor(p_min/dt), np.ceil(p_max/dt)
 	P0s = np.arange(P0_start,P0_end,1)
 	count=0
+	sigma_total = sigma_total*np.sqrt(2)
 	while count<=count_lim:
 		if count==0:	
 			data_1,data_2 = f.forced_dws_2phase(data)
@@ -105,8 +106,8 @@ def ffa_code_stage2(data ,dt , T , sigma_total,p_min, p_max, count_lim, name):
 				xwrap_2 = FFA.XWrap2(data_2,p0, fill_value=fill_value, pow2=True)
 				folds_1 = FFA.FFA(xwrap_1)
 				folds_2 = FFA.FFA(xwrap_2)	
-				SN_1 = f.simple_SNR(folds_1, np.std(data_1), added_profs)
-				SN_2 = f.simple_SNR(folds_2, np.std(data_2) , added_profs)
+				SN_1 = f.simple_SNR(folds_1, sigma_total, added_profs)
+				SN_2 = f.simple_SNR(folds_2, sigma_total , added_profs)
 
 				M = folds_1.shape[0]
 				P = p0 + (np.arange(M, dtype=np.float) / (M-1))
@@ -129,6 +130,7 @@ def ffa_code_stage2(data ,dt , T , sigma_total,p_min, p_max, count_lim, name):
 			SNs4_11, SNs4_12, SNs4_21, SNs4_22 = [],[],[],[]
 			P0_start, P0_end = np.floor(p_min/new_dt2), np.ceil(p_max/new_dt2)
 			P0s2=np.arange(P0_start,P0_end,1)
+			sigma_total = sigma_total*np.sqrt(2)
 			for p0 in P0s2:
 				p0=int(p0)
 				M_real = float(float(N)/p0)
@@ -147,10 +149,10 @@ def ffa_code_stage2(data ,dt , T , sigma_total,p_min, p_max, count_lim, name):
 				folds_21 = FFA.FFA(xwrap_21)
 				folds_22 = FFA.FFA(xwrap_22)
 
-				SN_11 = f.simple_SNR(folds_11, np.std(data_11) , added_profs)
-				SN_12 = f.simple_SNR(folds_12, np.std(data_12) , added_profs)
-				SN_21 = f.simple_SNR(folds_21, np.std(data_21) , added_profs)
-				SN_22 = f.simple_SNR(folds_22, np.std(data_22) , added_profs)
+				SN_11 = f.simple_SNR(folds_11, sigma_total , added_profs)
+				SN_12 = f.simple_SNR(folds_12, sigma_total , added_profs)
+				SN_21 = f.simple_SNR(folds_21, sigma_total , added_profs)
+				SN_22 = f.simple_SNR(folds_22, sigma_total , added_profs)
 
 				M = folds_11.shape[0]
 				P = p0 + (np.arange(M, dtype=np.float) / (M-1))
@@ -181,6 +183,7 @@ def ffa_code_stage2(data ,dt , T , sigma_total,p_min, p_max, count_lim, name):
 			SNs8_211 ,SNs8_212 ,SNs8_221 ,SNs8_222 =[],[],[],[]
 			P0_start, P0_end = np.floor(p_min/new_dt2), np.ceil(p_max/new_dt2)
 			P0s2=np.arange(P0_start,P0_end,1)
+			sigma_total = sigma_total*np.sqrt(2)
 			for p0 in P0s2:
 				p0=int(p0)
 
@@ -211,14 +214,14 @@ def ffa_code_stage2(data ,dt , T , sigma_total,p_min, p_max, count_lim, name):
 				folds_222 = FFA.FFA(xwrap_222)
 
 
-				SN_111 = f.simple_SNR(folds_111, np.std(data_111) , added_profs)
-				SN_121 = f.simple_SNR(folds_121, np.std(data_121) , added_profs)
-				SN_211 = f.simple_SNR(folds_211, np.std(data_211) , added_profs)
-				SN_221 = f.simple_SNR(folds_221, np.std(data_221) , added_profs)
-				SN_112 = f.simple_SNR(folds_112, np.std(data_112) , added_profs)
-				SN_122 = f.simple_SNR(folds_122, np.std(data_122) , added_profs)
-				SN_212 = f.simple_SNR(folds_212, np.std(data_212) , added_profs)
-				SN_222 = f.simple_SNR(folds_222, np.std(data_222) , added_profs)				
+				SN_111 = f.simple_SNR(folds_111, sigma_total , added_profs)
+				SN_121 = f.simple_SNR(folds_121, sigma_total , added_profs)
+				SN_211 = f.simple_SNR(folds_211, sigma_total , added_profs)
+				SN_221 = f.simple_SNR(folds_221, sigma_total , added_profs)
+				SN_112 = f.simple_SNR(folds_112, sigma_total , added_profs)
+				SN_122 = f.simple_SNR(folds_122, sigma_total , added_profs)
+				SN_212 = f.simple_SNR(folds_212, sigma_total , added_profs)
+				SN_222 = f.simple_SNR(folds_222, sigma_total , added_profs)				
 				M = folds_111.shape[0]
 				P = p0 + (np.arange(M, dtype=np.float) / (M-1))
 				Psec = P *new_dt2
@@ -277,6 +280,7 @@ def ffa_code_stage3(data ,dt ,T,sigma_total,p_min,p_max, count_lim,name):
 	plot_num=311
 	larges_dt3=[]
 	w=int(3)
+	sigma_total = sigma_total*np.sqrt(3)
 	while count<=count_lim:
 		if count==0:	
 			data_1,data_2,data_3=f.forced_dws_3phase(data)
@@ -303,9 +307,9 @@ def ffa_code_stage3(data ,dt ,T,sigma_total,p_min,p_max, count_lim,name):
 				folds_2 = FFA.FFA(xwrap_2)
 				folds_3 = FFA.FFA(xwrap_3)
 
-				SN_1 = f.simple_SNR(folds_1, np.std(data_1) , added_profs)
-				SN_2 = f.simple_SNR(folds_2, np.std(data_2) , added_profs)
-				SN_3 = f.simple_SNR(folds_3, np.std(data_3) , added_profs)
+				SN_1 = f.simple_SNR(folds_1, sigma_total , added_profs)
+				SN_2 = f.simple_SNR(folds_2, sigma_total , added_profs)
+				SN_3 = f.simple_SNR(folds_3, sigma_total , added_profs)
 
 				M = folds_1.shape[0]
 
@@ -336,6 +340,7 @@ def ffa_code_stage3(data ,dt ,T,sigma_total,p_min,p_max, count_lim,name):
 			P0s3=np.arange(P0_start,P0_end,1)
 			SNs9_11 ,SNs9_12 ,SNs9_13 ,SNs9_21 ,SNs9_22 = [],[],[],[],[] 
 			SNs9_23 ,SNs9_31 ,SNs9_32 ,SNs9_33  = [],[],[],[]
+			sigma_total = sigma_total*np.sqrt(3)
 			for p0 in P0s3:
 				p0=int(p0)
 				if p0==0 or p0 ==1:
@@ -364,15 +369,15 @@ def ffa_code_stage3(data ,dt ,T,sigma_total,p_min,p_max, count_lim,name):
 				folds_23 = FFA.FFA(xwrap_23)
 				folds_33 = FFA.FFA(xwrap_33)
 
-				SN_11 = f.simple_SNR(folds_11, np.std(data_11) , added_profs)
-				SN_21 = f.simple_SNR(folds_21, np.std(data_21) , added_profs)
-				SN_31 = f.simple_SNR(folds_31, np.std(data_31) , added_profs)
-				SN_12 = f.simple_SNR(folds_12, np.std(data_12) , added_profs)
-				SN_22 = f.simple_SNR(folds_22, np.std(data_22) , added_profs)
-				SN_32 = f.simple_SNR(folds_32, np.std(data_32) , added_profs)
-				SN_13 = f.simple_SNR(folds_13, np.std(data_13) , added_profs)
-				SN_23 = f.simple_SNR(folds_23, np.std(data_23) , added_profs)
-				SN_33 = f.simple_SNR(folds_33, np.std(data_33) , added_profs)
+				SN_11 = f.simple_SNR(folds_11, sigma_total , added_profs)
+				SN_21 = f.simple_SNR(folds_21, sigma_total , added_profs)
+				SN_31 = f.simple_SNR(folds_31, sigma_total , added_profs)
+				SN_12 = f.simple_SNR(folds_12, sigma_total , added_profs)
+				SN_22 = f.simple_SNR(folds_22, sigma_total , added_profs)
+				SN_32 = f.simple_SNR(folds_32, sigma_total , added_profs)
+				SN_13 = f.simple_SNR(folds_13, sigma_total , added_profs)
+				SN_23 = f.simple_SNR(folds_23, sigma_total , added_profs)
+				SN_33 = f.simple_SNR(folds_33, sigma_total , added_profs)
 
 
 				M = folds_11.shape[0]
@@ -428,7 +433,7 @@ def ffa_code_stage3(data ,dt ,T,sigma_total,p_min,p_max, count_lim,name):
 			SNs27_232, SNs27_332, SNs27_113, SNs27_213 = [], [], [], []
 			SNs27_313, SNs27_123, SNs27_223, SNs27_323 = [], [], [], []
 			SNs27_133,SNs27_233,SNs27_333 = [], [], []
-
+			sigma_total = sigma_total*np.sqrt(3)
 			for p0 in P0s3:
 				p0=int(p0)
 				if p0==0 or p0 ==1:
@@ -494,33 +499,33 @@ def ffa_code_stage3(data ,dt ,T,sigma_total,p_min,p_max, count_lim,name):
 				folds_333 = FFA.FFA(xwrap_333)
 			
 
-				SN_111 = f.simple_SNR(folds_111, np.std(data_111) , added_profs)
-				SN_211 = f.simple_SNR(folds_211, np.std(data_211) , added_profs)
-				SN_311 = f.simple_SNR(folds_311, np.std(data_311) , added_profs)
-				SN_121 = f.simple_SNR(folds_121, np.std(data_121) , added_profs)
-				SN_221 = f.simple_SNR(folds_221, np.std(data_221) , added_profs)
-				SN_321 = f.simple_SNR(folds_321, np.std(data_321) , added_profs)
-				SN_131 = f.simple_SNR(folds_131, np.std(data_131) , added_profs)
-				SN_231 = f.simple_SNR(folds_231, np.std(data_231) , added_profs)
-				SN_331 = f.simple_SNR(folds_331, np.std(data_331) , added_profs)
-				SN_112 = f.simple_SNR(folds_112, np.std(data_112) , added_profs)
-				SN_212 = f.simple_SNR(folds_212, np.std(data_212) , added_profs)
-				SN_312 = f.simple_SNR(folds_312, np.std(data_312) , added_profs)
-				SN_122 = f.simple_SNR(folds_122, np.std(data_122) , added_profs)
-				SN_222 = f.simple_SNR(folds_222, np.std(data_222) , added_profs)
-				SN_322 = f.simple_SNR(folds_322, np.std(data_322) , added_profs)
-				SN_132 = f.simple_SNR(folds_132, np.std(data_132) , added_profs)
-				SN_232 = f.simple_SNR(folds_232, np.std(data_232) , added_profs)
-				SN_332 = f.simple_SNR(folds_332, np.std(data_332) , added_profs)
-				SN_113 = f.simple_SNR(folds_113, np.std(data_113) , added_profs)
-				SN_213 = f.simple_SNR(folds_213, np.std(data_213) , added_profs)
-				SN_313 = f.simple_SNR(folds_313, np.std(data_313) , added_profs)
-				SN_123 = f.simple_SNR(folds_123, np.std(data_123) , added_profs)
-				SN_223 = f.simple_SNR(folds_223, np.std(data_223) , added_profs)
-				SN_323 = f.simple_SNR(folds_323, np.std(data_323) , added_profs)
-				SN_133 = f.simple_SNR(folds_133, np.std(data_133) , added_profs)
-				SN_233 = f.simple_SNR(folds_233, np.std(data_233) , added_profs)
-				SN_333 = f.simple_SNR(folds_333, np.std(data_333) , added_profs)
+				SN_111 = f.simple_SNR(folds_111, sigma_total , added_profs)
+				SN_211 = f.simple_SNR(folds_211, sigma_total , added_profs)
+				SN_311 = f.simple_SNR(folds_311, sigma_total , added_profs)
+				SN_121 = f.simple_SNR(folds_121, sigma_total , added_profs)
+				SN_221 = f.simple_SNR(folds_221, sigma_total , added_profs)
+				SN_321 = f.simple_SNR(folds_321, sigma_total , added_profs)
+				SN_131 = f.simple_SNR(folds_131, sigma_total , added_profs)
+				SN_231 = f.simple_SNR(folds_231, sigma_total , added_profs)
+				SN_331 = f.simple_SNR(folds_331, sigma_total , added_profs)
+				SN_112 = f.simple_SNR(folds_112, sigma_total , added_profs)
+				SN_212 = f.simple_SNR(folds_212, sigma_total , added_profs)
+				SN_312 = f.simple_SNR(folds_312, sigma_total , added_profs)
+				SN_122 = f.simple_SNR(folds_122, sigma_total , added_profs)
+				SN_222 = f.simple_SNR(folds_222, sigma_total , added_profs)
+				SN_322 = f.simple_SNR(folds_322, sigma_total , added_profs)
+				SN_132 = f.simple_SNR(folds_132, sigma_total , added_profs)
+				SN_232 = f.simple_SNR(folds_232, sigma_total , added_profs)
+				SN_332 = f.simple_SNR(folds_332, sigma_total , added_profs)
+				SN_113 = f.simple_SNR(folds_113, sigma_total , added_profs)
+				SN_213 = f.simple_SNR(folds_213, sigma_total , added_profs)
+				SN_313 = f.simple_SNR(folds_313, sigma_total , added_profs)
+				SN_123 = f.simple_SNR(folds_123, sigma_total , added_profs)
+				SN_223 = f.simple_SNR(folds_223, sigma_total , added_profs)
+				SN_323 = f.simple_SNR(folds_323, sigma_total , added_profs)
+				SN_133 = f.simple_SNR(folds_133, sigma_total , added_profs)
+				SN_233 = f.simple_SNR(folds_233, sigma_total , added_profs)
+				SN_333 = f.simple_SNR(folds_333, sigma_total , added_profs)
 				M = folds_111.shape[0]
 				P = p0 + (np.arange(M, dtype=np.float) / (M-1))
 				Psec = P *new_dt3 
