@@ -7,7 +7,7 @@ import re
 from operator import itemgetter
 import glob
 import subprocess 
-
+import Config_ffa
 import ffa_sifting
 
 def get_timeseries(beam):
@@ -342,17 +342,48 @@ def apply_sifting(candsfile, output_name):
 	
 
 #==================	Signal-to-noise functions	==================
+if Config_ffa.metric == 'A':
+	def simple_SNR(folds, sigma, added_profs):
+    		""" Return a very simple signal-to-noise for a profile.
+        	Works for narrow duty-cycle since  the S/N=Max-Med/std
+		For each M profiles, returns a value of SNR (i.e, output is a list of lenght M)
+    		"""
+    		M, P0 = folds.shape
+    		prof_std = 1.0/(np.sqrt(M-added_profs)*sigma)
+    		snr = (folds.max(axis=1)-np.median(folds, axis=1))*prof_std
+    		look_for_nan(snr)
+    		return snr
 
-def simple_SNR(folds, sigma, added_profs):
-    """ Return a very simple signal-to-noise for a profile.
-        Works for narrow duty-cycle since  the S/N is max_value/std
-	For each M profiles, returns a value of SNR (i.e, output is a list of lenght M)
-    """
-    M, P0 = folds.shape
-    prof_std = 1.0/(np.sqrt(M-added_profs)*sigma)
-    snr = (folds.max(axis=1)-np.median(folds, axis=1))*prof_std
-    look_for_nan(snr)
-    return snr
+if Config_ffa.metric == 'B':
+	def simple_SNR(folds, sigma_total, added_profs):
+    		""" Return a very simple signal-to-noise for a profile.
+		For each M profiles, returns a value of SNR (i.e, output is a list of lenght M)
+		When calculating the median and the standard deviation of a profile, it exludes 
+		a 20% window around the peak. S/N = Max-Med/std
+    		"""
+    		M, P0 = folds.shape
+    		N = M*P0
+
+    		width = int(0.1*P0)
+    		if width <1.0:
+			width == 1
+    		id_low = folds.argmax(axis=1)-width
+    		id_high = folds.argmax(axis=1)+width
+
+    		off_pulse = folds*0	
+    		for i in range(len(folds)):
+			if (id_low[i] >=0) and (id_high[i]<=P0):
+    				off_pulse[i][0:id_low[i]] = folds[i][0:id_low[i]]
+				off_pulse[i][id_high[i]:-1] = folds[i][id_high[i]:-1] 
+			elif (id_low[i] <0) and (id_high[i]<=P0):
+				off_pulse[i][0:(P0-2*width)] = folds[i][id_high[i]:id_low[i]]
+			elif (id_low[i] >=0) and (id_high[i]>P0):
+				off_pulse[i][0:(P0-2*width)] = folds[i][id_high[i]-P0:id_low[i]]
+    		prof_std = np.ones(M)/(sigma_total*np.sqrt((0.8*N/P0)-added_profs))
+    		masked =  np.ma.masked_where(off_pulse == 0, off_pulse)
+    		snr = (folds.max(axis=1)-np.ma.median(masked,axis=1))*prof_std
+    		look_for_nan(snr)
+    		return snr 
 
 
 def look_for_nan(SNs):
