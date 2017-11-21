@@ -371,14 +371,15 @@ if Config_ffa.metric == 'B':
     		id_high = folds.argmax(axis=1)+width
 
     		off_pulse = folds*0	
-    		for i in range(len(folds)):
+		for i in range(len(folds)):
 			if (id_low[i] >=0) and (id_high[i]<=P0):
     				off_pulse[i][0:id_low[i]] = folds[i][0:id_low[i]]
 				off_pulse[i][id_high[i]:-1] = folds[i][id_high[i]:-1] 
 			elif (id_low[i] <0) and (id_high[i]<=P0):
-				off_pulse[i][0:(P0-2*width)] = folds[i][id_high[i]:id_low[i]]
+				off_pulse[i][id_high[i]:id_low[i]] = folds[i][id_high[i]:id_low[i]]
 			elif (id_low[i] >=0) and (id_high[i]>P0):
-				off_pulse[i][0:(P0-2*width)] = folds[i][id_high[i]-P0:id_low[i]]
+				hi = id_high[i]-P0
+				off_pulse[i][hi:id_low[i]] = folds[i][hi:id_low[i]]
     		prof_std = np.ones(M)/(sigma_total*np.sqrt((0.8*N/P0)-added_profs))
     		masked =  np.ma.masked_where(off_pulse == 0, off_pulse)
     		snr = (folds.max(axis=1)-np.ma.median(masked,axis=1))*prof_std
