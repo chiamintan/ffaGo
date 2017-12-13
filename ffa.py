@@ -6,7 +6,7 @@ import sys
 import os
 import ast
 import re
-from matplotlib import rc
+import matplotlib 
 import matplotlib.pyplot as plt
 import scipy.signal
 import glob
@@ -19,6 +19,12 @@ import ffa_tools as ft
 import ffa_stages as fs
 import FFA_cy as FFA
 import ffa_help 
+
+
+font = {'family' : 'Times',
+        'size'   : 16}
+matplotlib.rc('font', **font)
+matplotlib.rc('text', usetex=True)
 
 time_total = time.time()
 
@@ -362,7 +368,7 @@ def main():
         plt.subplot(311)
 	# Initial sampling interval (shortest)
         plt.suptitle("Periodograms"+'\n'+name, fontsize=20)
-        plt.plot(Ps1,list_SNS[0],color='mediumpurple',linewidth=1.3,label=r'$\Delta t \sim $ '+str(round(list_DTS[0][0],4))+'s')
+        plt.plot(Ps1,list_SNS[0],color='k',linewidth=1.3,label=r'$\Delta t \sim $ '+str(round(list_DTS[0][0],4))+'s')
         plt.ylabel(' S/N ' ,fontsize=20)
         plt.fill_between(Ps9, 5, 0,alpha = '0.2',color='grey')
         plt.xlim(xmin=xmin,xmax=xmax)
@@ -374,8 +380,8 @@ def main():
     
         plt.subplot(312)
         # sampling interval : 2X initial
-	plt.plot(Ps2,list_SNS[1],color='slateblue',linewidth=1.0,label=r'$\Delta t \sim $ '+str(round(list_DTS[1][0],4))+'s')
-        plt.plot(Ps2,list_SNS[2],color='steelblue',linewidth=1.0)
+	plt.plot(Ps2,list_SNS[1],color='k',linewidth=1.0,label=r'$\Delta t \sim $ '+str(round(list_DTS[1][0],4))+'s')
+        plt.plot(Ps2,list_SNS[2],color='k',linewidth=1.0)
         plt.ylabel(' S/N ' ,fontsize=20)
         plt.fill_between(Ps9, 5, 0,alpha = '0.2',color='grey')
         plt.xlim(xmin=xmin,xmax=xmax)
@@ -387,10 +393,10 @@ def main():
     
 	plt.subplot(313)
         # sampling interval : 9X initial, only  4 phases plotted out of 9
-        plt.plot(Ps9,list_SNS[10],color='mediumseagreen',linewidth=1.0,label=r'$\Delta t \sim $ '+str(round(list_DTS[10][0],4))+'s')
-        plt.plot(Ps9,list_SNS[12],color='lime',linewidth=1.0)
-        plt.plot(Ps9,list_SNS[15],color='forestgreen',linewidth=1.0)
-        plt.plot(Ps9,list_SNS[18],color='darkolivegreen',linewidth=1.0)
+        plt.plot(Ps9,list_SNS[10],color='k',linewidth=1.0,label=r'$\Delta t \sim $ '+str(round(list_DTS[10][0],4))+'s')
+        plt.plot(Ps9,list_SNS[12],color='k',linewidth=1.0)
+        plt.plot(Ps9,list_SNS[15],color='k',linewidth=1.0)
+        plt.plot(Ps9,list_SNS[18],color='k',linewidth=1.0)
         plt.ylabel(' S/N ' ,fontsize=20)
         plt.xlabel('Period (s)',fontsize=20)
         plt.fill_between(Ps9, 5, 0,alpha = '0.2',color='grey')
@@ -401,10 +407,10 @@ def main():
 	plt.minorticks_on()
         plt.legend(frameon=False,prop={'size':14})
 	
-        plt.savefig(name+'.png')
+        plt.savefig(name+'.pdf',dpi = 400,bbox_inches='tight')
 	if not noxwin:
 		plt.show()
-        print "Periodogram available : ", name+'.png'
+        print "Periodogram available : ", name+'.pdf'
 
 
 if __name__=='__main__':
