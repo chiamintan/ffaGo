@@ -410,7 +410,7 @@ if Config_ffa.metric == 'C':
 			elif (id_low[i] >=0) and (id_high[i]>P0):
 				hi = id_high[i]-P0
 				off_pulse[i][hi:id_low[i]] = folds[i][hi:id_low[i]]
-    		prof_std = np.ones(M)/(sigma_total*np.sqrt((0.8*(M-added_profs)))
+    		prof_std = np.ones(M)/(sigma_total*np.sqrt((0.8*(M-added_profs))))
     		masked =  np.ma.masked_where(off_pulse == 0, off_pulse)
     		snr = (folds.max(axis=1)-np.ma.median(masked,axis=1))*prof_std
     		look_for_nan(snr)
