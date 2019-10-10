@@ -14,6 +14,8 @@ import subprocess
 import optparse
 import argparse
 import pickle
+import warnings
+warnings.filterwarnings(action="ignore",category=SyntaxWarning)
 
 import ffa_tools as ft
 import ffa_stages as fs
