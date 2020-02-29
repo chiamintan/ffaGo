@@ -144,7 +144,7 @@ def main():
     print "Detrending .."
     #window size : over which statistics are computed 
     window_size = win_detrend*int(len(ts)/T)        
-    break_points = np.arange(0,len(ts),window_size) 
+    break_points = np.arange(0,len(ts),int(window_size)) 
     ts = scipy.signal.detrend(ts,bp=break_points)
     
     # Normalize w.r.t. maximum

@@ -128,7 +128,7 @@ class FFACandlist(sifting.Candlist):
         #                    orientation="horizontal")
         #cb.set_label("Num harmonics summed") 
         
-        plt.axes(ax) # Set scatter plot's axes as current
+        plt.sca(ax) # Set scatter plot's axes as current
         plt.xscale(xscale)
         plt.xlabel(xlabel,fontsize='x-large')
         mindm = Num.min(dms)
@@ -215,7 +215,7 @@ class FFACandlist(sifting.Candlist):
         fig.legend(handles, labels, 'lower center', \
                         prop={'size':'x-small'}, ncol=4)
 
-        plt.xscale(xscale) 
+        #plt.xscale(xscale) 
         plt.xlabel(xlabel)
 
         alldms = Num.array([c.DM for c in self.get_all_cands()])
